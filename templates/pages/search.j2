@@ -1,0 +1,21 @@
+{% extends 'bases/page_layout.j2' %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row h3">
+      Kết quả tìm kiếm cho: {{ query }}
+    </div>
+    <hr/>
+    <div class="row" style="margin-top: -1rem">
+      {% for movie in movies %}
+        <div  class="col-lg-3 col-md-4 col-sm-6">
+          {% include 'components/movie_card.j2' %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="row justify-content-center">
+        {% include 'components/pagination.j2' %}
+    </div>
+  </div>
+{% endblock %}
+    

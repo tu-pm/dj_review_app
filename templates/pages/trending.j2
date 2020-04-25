@@ -1,0 +1,52 @@
+{% extends 'bases/page_layout.j2' %}
+
+{%block trending %} active {% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row h3">
+      Movies on trending:
+    </div>
+    <hr/>
+    <div class="row justify-content-center">
+      {% for movie in movies %}
+        <div  class="col-lg-11">
+          <div class="card">
+            <div class="container-fluid">
+              <div class="row justify-content-between">
+                <div class="col-5 py-3">
+                  <img style="width: 100%; height: auto" src="{{ movie.backdrop_path }}" alt="">
+                </div>
+                <div class="col-7 pb-3 d-flex flex-column">
+                  <div class="h3 mb-0">
+                    #{{ forloop.counter }}: {{ movie.title }}
+                  </div>
+                  <div class="my-2 p">
+                    Release date: {{ movie.release_date }}
+                  </div>
+                  <div class="my-2 p">
+                    Genres:
+                    {% for genre in movie.genres %}
+                      <span style="font-size: 0.8rem" class="ml-2 badge badge-pill badge-genre">{{ genre.name }}</span>
+                    {% endfor %}
+                  </div>
+                  <div class="my-2 p mb-auto">
+                    Rating: 
+                    <span style="font-size: 0.8rem" class="ml-2 badge badge-score">{{ movie.rating }}</span>
+                    <span class="ml-2">({{ movie.vote_count }} votes )</span>
+                  </div>
+                  <div>
+                    <a href="{% url 'details' movie.tmdb_id %}"class="btn btn-primary btn-link btn-sm pl-0">See details ...</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="row justify-content-center">
+      {% include 'components/pagination.j2' %}
+    </div>
+  </div>
+{% endblock %}

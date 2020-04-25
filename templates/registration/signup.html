@@ -1,0 +1,10 @@
+{% extends 'bases/auth_base.j2' %}
+
+{% block title %}Sign Up{% endblock %}
+{% block subtitle %}Fill out the form below to create a new account.{% endblock %}
+{% block action %} /signup {% endblock %}
+{% block form_name %}Sign Up{% endblock %}
+{% block submit %}Sign Up{% endblock %}
+{% block redirect %}
+  Already have an account? <a href="{% url 'login' %}" target="_self" class="ml-2 btn btn-sm btn-round">Login</a>
+{% endblock %}

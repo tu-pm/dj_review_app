@@ -1,0 +1,99 @@
+{% extends 'bases/page_layout.j2' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row h3 mt-0">
+      Movie details:
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <div class="card">
+          <div class="container-fluid">
+            <div class="row justify-content-end">
+              <div class="col-5 py-3">
+                <img style="width: 100%; height: auto" src="{{ current.poster_path }}" alt="">
+              </div>
+              <div class="col-7 py-3 d-flex flex-column">
+                <div class="h2">
+                  {{ current.title }}
+                </div>
+                <div class="my-2 h5">
+                  Release date: {{ current.release_date }}
+                </div>
+                <div class="my-2 h5">
+                  Genres:
+                  {% for genre in current.genres %}
+                    <span style="font-size: 0.8rem" class="ml-2 badge badge-pill badge-genre">{{ genre.name }}</span>
+                  {% endfor %}
+                </div>
+                <div class="my-2">
+                    <span class="h5 pr-2">Overview:</span> <span class="overview">{{ current.overview }}</span> 
+                </div>
+                <div class="my-2 h5">
+                  Rating: <span style="font-size: 1rem" class="ml-2 badge badge-score">{{ current.rating }}</span>
+                </div>
+                <div class='d-flex my-2 mb-auto'>
+                  <div class="mt-2 mb-1 h5">
+                    Rate it yourself: 
+                  </div>
+                  <div class="rate">
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="Excellent">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="Great">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="Good">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="Bad">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="Very Bad">1 star</label>
+                  </div>
+                </div>
+                <div>
+                  <button class="btn btn-warning btn-round">
+                    <i class="material-icons mr-2">favorite</i> Add to watch list
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row h3 ml-1 mt-3">
+      Related movies:
+    </div>
+    <div class="row" style="margin-top: -1rem">
+      {% for movie in related %}
+        <div  class="col-lg-3 col-md-4 col-sm-6">
+          {% include 'components/movie_card.j2' %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="row justify-content-center">
+      {% with movies=related %}
+        {% include 'components/pagination.j2' %}
+      {% endwith %}
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block script %}
+<script charset="utf-8">
+  $(document).ready(function (){
+    $('input[value="{{ rated }}"]').attr('checked', 'checked')
+    $(document).on('click', 'input[type="radio"]', function(){
+      let rating = $(this).val();
+      $.post(
+        '{% url "add_rating" %}',
+          {
+            rating: rating,
+            movie_id: {{ current.tmdb_id }} 
+          }
+        ); 
+      })
+
+  })  
+</script>
+{% endblock %}

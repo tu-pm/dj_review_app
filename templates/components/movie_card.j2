@@ -1,0 +1,11 @@
+<div class="card">
+  <img class="card-img-top" src="{{  movie.backdrop_path }}">
+  <div class="card-body">
+    <p class="card-title h5">{{ movie.title }}</p>
+    <p class="card-text mb-0">Release date: {{ movie.release_date }}</p>
+    <p class="card-text">Rating: <span class="ml-2 badge badge-score">{{ movie.rating }}</span></p>
+  </div>
+  <div class="card-footer" style="padding-top: 0">
+    <a href="{% url 'details' movie.tmdb_id %}" class="btn btn-primary btn-sm">Details</a>
+  </div>
+</div>

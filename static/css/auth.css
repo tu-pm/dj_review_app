@@ -1,0 +1,25 @@
+.btn-submit {
+	border-radius: 20px;
+	border: 1px solid #FF4B2B;
+	background-color: #FF4B2B;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+.btn-submit:active {
+	transform: scale(0.95);
+}
+
+.btn-submit:focus {
+	outline: none;
+}
+
+.btn.btn-submit:hover {
+	border: 1px solid #d84e36;
+  background-color: #d84e36
+}

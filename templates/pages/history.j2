@@ -1,0 +1,78 @@
+{% extends 'bases/page_layout.j2' %}
+
+{%block history %} active {% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row h3">
+      Reviewed movies
+    </div>
+    <hr/>
+    <div class="row justify-content-center">
+      {% for movie in movies %}
+        <div  class="col-lg-11">
+          <div class="card">
+            <div class="container-fluid">
+              <div class="row justify-content-between">
+                <div class="col-5 py-3">
+                  <img style="width: 100%; height: auto" src="{{ movie.backdrop_path }}" alt="">
+                </div>
+                <div class="col-7 pb-3 d-flex flex-column">
+                  <div class="h3 mb-0">
+                    {{ movie.title }}
+                  </div>
+                  <div class="my-2 p">
+                    Release date: {{ movie.release_date }}
+                  </div>
+                  <div class='d-flex my-2 mb-auto'>
+                    <div class="my-2 p">
+                      Your vote: 
+                    </div>
+                    <div class="rate" id={{ movie.tmdb_id }}>
+                      <input type="radio" id="star5_{{ movie.tmdb_id }}" name="rate_{{ movie.tmdb_id }}" value="5" {% if movie.user_rating == 5 %}checked{% endif %}/>
+                      <label for="star5_{{ movie.tmdb_id }}" title="Excellent">5 stars</label>
+                      <input type="radio" id="star4_{{ movie.tmdb_id }}" name="rate_{{ movie.tmdb_id }}" value="4" {% if movie.user_rating == 4 %}checked{% endif %}/>
+                      <label for="star4_{{ movie.tmdb_id }}" title="Great">4 stars</label>
+                      <input type="radio" id="star3_{{ movie.tmdb_id }}" name="rate_{{ movie.tmdb_id }}" value="3" {% if movie.user_rating == 3 %}checked{% endif %}/>
+                      <label for="star3_{{ movie.tmdb_id }}" title="Good">3 stars</label>
+                      <input type="radio" id="star2_{{ movie.tmdb_id }}" name="rate_{{ movie.tmdb_id }}" value="2" {% if movie.user_rating == 2 %}checked{% endif %}/>
+                      <label for="star2_{{ movie.tmdb_id }}" title="Bad">2 stars</label>
+                      <input type="radio" id="star1_{{ movie.tmdb_id }}" name="rate_{{ movie.tmdb_id }}" value="1" {% if movie.user_rating == 1 %}checked{% endif %}/>
+                      <label for="star1_{{ movie.tmdb_id }}" title="Very Bad">1 star</label>
+                    </div>
+                  </div>
+                  <div>
+                    <a href="{% url 'details' movie.tmdb_id %}"class="btn btn-primary btn-link btn-sm pl-0">See details ...</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="row justify-content-center">
+      {% include 'components/pagination.j2' %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+<script charset="utf-8">
+  $(document).ready(function (){
+    $(document).on('click', 'input[type="radio"]', function(){
+      let rating = $(this).val();
+      let id = $(this).parent().attr('id')
+      console.log(id)
+      $.post(
+        '{% url "add_rating" %}',
+          {
+            rating: rating,
+            movie_id: id 
+          }
+        ); 
+      })
+
+  })  
+</script>
+{% endblock %}

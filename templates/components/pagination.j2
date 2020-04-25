@@ -1,0 +1,13 @@
+<nav>
+  <ul class="pagination">
+    {% if movies.has_previous %}
+      <li class="page-item"><a class="page-link" href="?{{ parameters }}&page=1">First page</a></li>
+      <li class="page-item"><a class="page-link" href="?{{ parameters }}&page={{ movies.previous_page_number }}">{{ movies.previous_page_number }}</a></li>
+    {% endif %}
+    <li class="page-item active"><a class="page-link" href="#">{{ movies.number }}</a></li>
+    {% if movies.has_next %}
+      <li class="page-item"><a class="page-link" href="?{{ parameters }}&page={{ movies.next_page_number }}">{{ movies.next_page_number }}</a></li>
+      <li class="page-item"><a class="page-link" href="?{{ parameters }}&page={{ movies.paginator.num_pages }}">Last page</a></li>
+    {% endif %}
+  </ul>
+</nav>

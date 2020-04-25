@@ -1,0 +1,10 @@
+{% extends 'bases/auth_base.j2' %}
+
+{% block title %}Log in{% endblock %}
+{% block subtitle %}Please log in to continue.{% endblock %}
+{% block action %} /login/ {% endblock %}
+{% block form_name %}Welcome{% endblock %}
+{% block submit %}Log in{% endblock %}
+{% block redirect %}
+  Not have an account yet? <a href="{% url 'signup' %}" target="_self" class="ml-2 btn btn-sm btn-round">Sign Up</a>
+{% endblock %}
